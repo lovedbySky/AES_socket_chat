@@ -12,12 +12,25 @@ class Client:
     data = json.load(file)
     file.close()
 
-    aes = AESCipher(data["config"]["key"])
-    ip = data["config"]["ip"]
-    port = data["config"]["port"]
-    name = data["config"]["name"] + ": "
+    key = data["config"]["key"] or "12345"
+    aes = AESCipher(key)
+    ip = data["config"]["ip"] or "0.0.0.0"
+    port = data["config"]["port"] or 4444
+    name = data["config"]["name"] + ": " or "user" + ": "
     client = None
     connect = False
+
+    @classmethod
+    def init(cls):
+        file = open("config.json", "r")
+        data = json.load(file)
+        file.close()
+
+        cls.key = data["config"]["key"]
+        cls.aes = AESCipher(cls.key)
+        cls.ip = data["config"]["ip"]
+        cls.port = data["config"]["port"]
+        cls.name = data["config"]["name"] + ": "
 
     @classmethod
     def __connect_to_server(cls, ip, port):
@@ -32,7 +45,12 @@ class Client:
                 break
             else:
                 msg = cls.client.recv(1024).decode("utf-8")
-                msg = cls.aes.decrypt(msg)
+                if "/exit" not in msg and "/quit" not in msg:
+                    try:
+                        msg = cls.aes.decrypt(msg)
+                    except UnicodeDecodeError:
+                        print("Non valid key, cannot read the message")
+                        continue
                 if cls.name not in msg:
                     print(msg.strip())
 

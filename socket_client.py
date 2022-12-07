@@ -39,7 +39,7 @@ class Client:
         cls.client.connect((ip, port))
 
     @classmethod
-    def __accept_messages(cls):
+    def __accept_messages(cls, data=[]):
         while True:
             if not cls.connect:
                 break
@@ -51,7 +51,8 @@ class Client:
                     except UnicodeDecodeError:
                         print("Non valid key, cannot read the message")
                         continue
-                if cls.name not in msg:
+                if cls.name not in msg and not msg.isspace():
+                    data.append(msg.strip())
                     print(msg.strip())
 
     @classmethod

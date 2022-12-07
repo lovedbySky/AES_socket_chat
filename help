@@ -1,0 +1,12 @@
+
+* This is chat with AES encryptor *
+
+commands:
+	set_name - setup your nickname
+	set_ip - setup server ip
+	set_port - setup server port
+	set_key - setup your key for encrypt
+	connect - connection to chat
+	clear - clear the console
+	exit - type for quit from program
+

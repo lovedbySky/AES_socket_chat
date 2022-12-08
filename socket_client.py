@@ -26,11 +26,11 @@ class Client:
         data = json.load(file)
         file.close()
 
-        cls.key = data["config"]["key"]
+        cls.key = data["config"]["key"] or "12345"
         cls.aes = AESCipher(cls.key)
-        cls.ip = data["config"]["ip"]
-        cls.port = data["config"]["port"]
-        cls.name = data["config"]["name"] + ": "
+        cls.ip = data["config"]["ip"] or "0.0.0.0"
+        cls.port = data["config"]["port"] or 4444
+        cls.name = data["config"]["name"] + ": " or "user" + ": "
 
     @classmethod
     def __connect_to_server(cls, ip, port):
@@ -72,4 +72,3 @@ class Client:
                 exit(0)
             msg = cls.aes.encrypt(msg)
             cls.client.send(bytes(msg, "utf-8"))
-

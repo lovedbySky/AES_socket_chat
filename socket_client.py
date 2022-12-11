@@ -75,5 +75,8 @@ class Client:
 
 
 if __name__ == "__main__":
-    Client.init()
-    Client.connect_to_chat()
+    try:
+        Client.init()
+        Client.connect_to_chat()
+    except:
+        print("Error")

@@ -1,10 +1,10 @@
 #include <fstream>
 #include <string>
 #include <map>
-
 using namespace std;
 
-string read_json(string filename)
+
+string __read_json(string filename)
 {
 	string json_str;
 	char symbol;
@@ -19,7 +19,7 @@ string read_json(string filename)
 }
 
 
-void write_json(string filename, map <string, string> json)
+void map_to_json(string filename, map <string, string> json)
 {
 	string json_str;
 	map <string, string> :: iterator it = json.begin();
@@ -38,8 +38,9 @@ void write_json(string filename, map <string, string> json)
 }
 
 
-map <string, string> parse_json(string json_str)
+map <string, string> json_to_map(string filename)
 {
+	string json_str = __read_json(filename);
 	map <string, string> json;
 	string key, value;
 	bool begin = false, is_key = false;

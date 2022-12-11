@@ -2,15 +2,15 @@
 #include <fstream>
 #include <string>
 #include <map>
-#include "json.cpp"
-
+#include "json.hpp"
 using namespace std;
+
 
 void print_intro();
 void handle_commands(string command);
 
 
-map <string, string> json = parse_json(read_json("config.json"));
+map <string, string> json = json_to_map("config.json");
 
 
 int main(int argc, char *argv[])
@@ -29,22 +29,22 @@ int main(int argc, char *argv[])
 
 void print_intro()
 {
-	cout << "\n\t 111   1   1    1    11111" << endl;
-	cout << "\t11     11111   1 1     1" << endl;
-	cout << "\t11  1  1   1  11111    1" << endl;
-	cout << "\t 111   1   1  1   1    1\n" << endl;
-	cout << "\t\tname: " << json["name"] << endl;
-	cout << "\t\tip: " << json["ip"] << endl;
-	cout << "\t\tport: " << json["port"] << endl;
-	cout << "\t\tkey: " << json["key"] << endl;
-	cout << "\n\ttype 'help' for get manual\n" << endl;
+	cout << "\n\t 111   1   1    1    11111" << endl
+		<< "\t11     11111   1 1     1" << endl
+		<< "\t11  1  1   1  11111    1" << endl
+		<< "\t 111   1   1  1   1    1\n" << endl
+		<< "\t\tname: " << json["name"] << endl
+		<< "\t\tip: " << json["ip"] << endl
+		<< "\t\tport: " << json["port"] << endl
+		<< "\t\tkey: " << json["key"] << endl
+		<< "\n\ttype 'help' for get manual\n" << endl;
 }
 
 
 void reload()
 {
 	system("clear");
-	write_json("config.json", json);
+	map_to_json("config.json", json);
 	print_intro();
 }
 
